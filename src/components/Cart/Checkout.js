@@ -1,6 +1,16 @@
 import { useRef } from "react";
 import classes from "./Checkout.module.css";
 
+const isEmpty = (value) => {
+  // eslint-disable-next-line no-unused-expressions
+  value.trim() === "";
+};
+
+const isFiveChars = (value) => {
+  // eslint-disable-next-line no-unused-expressions
+  value.trim().length === 5;
+};
+
 const Checkout = (props) => {
   const nameInputRef = useRef();
   const streetInputRef = useRef();
@@ -14,6 +24,21 @@ const Checkout = (props) => {
     const enteredStreet = nameInputRef.current.value;
     const enteredPostalCode = nameInputRef.current.value;
     const enteredCity = nameInputRef.current.value;
+
+    const enteredNameValid = !isEmpty(enteredName);
+    const enteredStreetValid = !isEmpty(enteredStreet);
+    const enteredPostalCodeValid = !isEmpty(enteredPostalCode);
+    const enteredCityValid = isFiveChars(enteredCity);
+
+    const formValid =
+      enteredNameValid &&
+      enteredStreetValid &&
+      enteredPostalCodeValid &&
+      enteredCityValid;
+
+    if (!formValid) {
+      return;
+    }
   };
 
   return (
