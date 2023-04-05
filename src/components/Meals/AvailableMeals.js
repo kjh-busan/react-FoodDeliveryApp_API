@@ -12,7 +12,7 @@ const AvailableMeals = () => {
     const fetchMeals = async () => {
       setIsLoading(true);
       const response = await fetch(
-        "https://react-http-3d9ed-default-rtdb.asia-southeast1.firebasedatabase.app/meals.json"
+        "https://react-http-3d9ed-default-rtdb.asia-southeast1.firebasedatabase.app/meals"
       );
 
       if (!response.ok) {
@@ -36,18 +36,15 @@ const AvailableMeals = () => {
       setIsLoading(false);
     };
 
-    try {
-      fetchMeals();
-    } catch (err) {
-      // console.error(err);
+    fetchMeals().catch((err) => {
       setIsLoading(false);
       setHttpError(err.message);
-    }
+    });
   }, []);
 
   if (isLoading) {
     return (
-      <section className={classes.MealsError}>
+      <section className={classes.MealsLoading}>
         <p>Loading...</p>
       </section>
     );
@@ -55,7 +52,7 @@ const AvailableMeals = () => {
 
   if (httpError) {
     return (
-      <section className={classes.MealsLoading}>
+      <section className={classes.MealsError}>
         <p>{httpError}</p>
       </section>
     );
