@@ -2,8 +2,11 @@ import React from "react";
 import classes from "./Checkout.module.css";
 
 const Checkout = (props) => {
+  const confirmHandler = (event) => {
+    event.preventDefault();
+  };
   return (
-    <form>
+    <form onSubmit={confirmHandler}>
       <div className={classes.contorl}>
         <label htmlFor="name">Your Name</label>
         <input type="text" id="name" placeholder="Name plz" />
