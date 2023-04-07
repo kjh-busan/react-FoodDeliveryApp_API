@@ -1,15 +1,8 @@
 import { useRef, useState } from "react";
 import classes from "./Checkout.module.css";
 
-const isEmpty = (value) => {
-  // eslint-disable-next-line no-unused-expressions
-  value.trim() === "";
-};
-
-const isFiveChars = (value) => {
-  // eslint-disable-next-line no-unused-expressions
-  value.trim().length === 5;
-};
+const isEmpty = (value) => value.trim() === "";
+const isFiveChars = (value) => value.trim().length === 5;
 
 const Checkout = (props) => {
   const [formInputValidity, setFormInputValidity] = useState({
@@ -34,8 +27,18 @@ const Checkout = (props) => {
 
     const enteredNameValid = !isEmpty(enteredName);
     const enteredStreetValid = !isEmpty(enteredStreet);
-    const enteredPostalCodeValid = !isEmpty(enteredPostalCode);
-    const enteredCityValid = isFiveChars(enteredCity);
+    const enteredPostalCodeValid = isFiveChars(enteredPostalCode);
+    const enteredCityValid = !isEmpty(enteredCity);
+
+    console.log(
+      enteredNameValid,
+      ":",
+      enteredStreetValid,
+      ":",
+      enteredPostalCodeValid,
+      ":",
+      enteredCityValid
+    );
 
     setFormInputValidity({
       name: enteredNameValid,
@@ -47,29 +50,44 @@ const Checkout = (props) => {
     if (!formInputValidity) {
       return;
     }
+
+    // submit
   };
+
+  const nameControlCalsses = `${classes.control} ${
+    formInputValidity.name ? "" : classes.invalid
+  }`;
+  const streetControlCalsses = `${classes.control} ${
+    formInputValidity.street ? "" : classes.invalid
+  }`;
+  const postalCodeControlCalsses = `${classes.control} ${
+    formInputValidity.postalCode ? "" : classes.invalid
+  }`;
+  const cityControlCalsses = `${classes.control} ${
+    formInputValidity.city ? "" : classes.invalid
+  }`;
 
   return (
     <form className={classes.form} onSubmit={confirmHandler}>
-      <div className={classes.control}>
+      <div className={nameControlCalsses}>
         <label htmlFor="name">Your Name</label>
         <input type="text" id="name" ref={nameInputRef} />
-        {formInputValidity.name && <p>name error!!!</p>}
+        {!formInputValidity.name && <p>name error!!!</p>}
       </div>
-      <div className={classes.control}>
+      <div className={streetControlCalsses}>
         <label htmlFor="street">Street</label>
         <input type="text" id="street" ref={streetInputRef} />
-        {formInputValidity.street && <p>street error!!!</p>}
+        {!formInputValidity.street && <p>street error!!!</p>}
       </div>
-      <div className={classes.control}>
+      <div className={postalCodeControlCalsses}>
         <label htmlFor="postal">Postal Code</label>
         <input type="text" id="postal" ref={postalCodeInputRef} />
-        {formInputValidity.postalCode && <p>postal error!!!</p>}
+        {!formInputValidity.postalCode && <p>postal error!!!</p>}
       </div>
-      <div className={classes.control}>
+      <div className={cityControlCalsses}>
         <label htmlFor="city">City</label>
         <input type="text" id="city" ref={cityInputRef} />
-        {formInputValidity.city && <p>city error!!!</p>}
+        {!formInputValidity.city && <p>city error!!!</p>}
       </div>
       <div className={classes.actions}>
         <button type="button" onClick={props.onCancel}>
