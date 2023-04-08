@@ -62,7 +62,7 @@ const Cart = (props) => {
 
   const modalActions = (
     <div className={classes.actions}>
-      <button className={classes["button--alt"]} onClick={props.onClose}>
+      <button className={classes.button} onClick={props.onClose}>
         Close
       </button>
       {hasItems && (
@@ -89,7 +89,16 @@ const Cart = (props) => {
   );
 
   const isSubmittingModalContent = <p>Send Order data...</p>;
-  const didSubmitModalContent = <p>Successfully sent the order!</p>;
+  const didSubmitModalContent = (
+    <>
+      <p>Successfully sent the order!</p>
+      <div className={classes.actions}>
+        <button className={classes["button--alt"]} onClick={props.onClose}>
+          Close
+        </button>
+      </div>
+    </>
+  );
 
   return (
     <Modal onClose={props.onClose}>
